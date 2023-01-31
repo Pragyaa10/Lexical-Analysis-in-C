@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+bool isSeparator(char *str)
+{
+    if (!strcmp(str, ",") || !strcmp(str, ";") || !strcmp(str, "(") || !strcmp(str, ")") ||!strcmp(str, "[") || !strcmp(str, "]") || !strcmp(str, "{") || !strcmp(str, "}"))
+         return (true);
+   return (false);
+}
+bool isOperator(char *str)
+{
+    if (!strcmp(str, "+") || !strcmp(str, "-") || !strcmp(str, "*") || !strcmp(str, "/") || !strcmp(str, ">") || !strcmp(str, "<") || !strcmp(str, "=") || !strcmp(str, "%") || !strcmp(str, "==") || !strcmp(str, "!=") || !strcmp(str, "++") || !strcmp(str, "--"))
+         return (true);
+   return (false);
+}
+bool isIdentifier(char *str)
+{
+    if (str[0] == '0' || str[0] == '1' || str[0] == '2' ||
+        str[0] == '3' || str[0] == '4' || str[0] == '5' ||
+        str[0] == '6' || str[0] == '7' || str[0] == '8' ||
+        str[0] == '9' )
+         return (false);
+   return (true);
+}
+bool isConstant(char *str)
+{
+    if(strlen(str)<2){
+    if (str[0] == '0' || str[0] == '1' || str[0] == '2' ||
+        str[0] == '3' || str[0] == '4' || str[0] == '5' ||
+        str[0] == '6' || str[0] == '7' || str[0] == '8' ||
+        str[0] == '9')
+         return (true);}
+   return (false);
+}
+bool isKeyword(char *str)
+{
+    if (!strcmp(str, "if") || !strcmp(str, "else") ||
+        !strcmp(str, "while") || !strcmp(str, "do") ||
+        !strcmp(str, "break") ||
+         !strcmp(str, "continue") || !strcmp(str, "int")
+        || !strcmp(str, "double") || !strcmp(str, "float")
+        || !strcmp(str, "return") || !strcmp(str, "char")
+        || !strcmp(str, "case") || !strcmp(str, "char")
+        || !strcmp(str, "sizeof") || !strcmp(str, "long")
+        || !strcmp(str, "short") || !strcmp(str, "typedef")
+        || !strcmp(str, "switch") || !strcmp(str, "unsigned")
+        || !strcmp(str, "void") || !strcmp(str, "static")
+        || !strcmp(str, "struct") || !strcmp(str, "goto"))
+         return (true);
+   return (false);
+}
+
+int parse(char *str)
+{
+    char *token=strtok(str," ");
+    while(token!=NULL)
+    {
+        if(isOperator(token)==true)
+        printf("%s is an operator\n",token);
+        else if(isKeyword(token)==true)
+        printf("%s is a Keyword\n",token);
+        else if(isSeparator(token)==true)
+        printf("%s is a Separator\n",token);
+        else if(isIdentifier(token)==true)
+        printf("%s is an Identifier\n",token);
+        else if(isConstant(token)==true)
+        printf("%s is a Constant\n",token);
+        else
+        printf("%s is invalid\n",token);
+        token = strtok(NULL, " ");
+    }
+    return 0;
+}
+int main()
+{
+    char str[100];
+    scanf("%[^\n]",str);
+    parse(str);
+    return 0;
+}
